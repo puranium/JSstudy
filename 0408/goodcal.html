@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>좋은 웹 계산기</title>
+</head>
+<body>
+<input type="text" id="show">
+<table>
+    <tr>
+        <td><button type="button" onclick="add_op('+')">+</button></td>
+        <td><button type="button" onclick="add_op('-')">-</button></td>
+        <td><button type="button" onclick="add_op('*')">*</button></td>
+        <td><button type="button" onclick="add_op('/')">/</button></td>
+    </tr>
+    <tr>
+        <td><button type="button" onclick="add_num('7')">7</button></td>
+        <td><button type="button" onclick="add_num('8')">8</button></td>
+        <td><button type="button" onclick="add_num('9')">9</button></td>
+        <td><button type="button" onclick="del()">C</button></td>
+    </tr>
+    <tr>
+        <td><button type="button" onclick="add_num('4')">4</button></td>
+        <td><button type="button" onclick="add_num('5')">5</button></td>
+        <td><button type="button" onclick="add_num('6')">6</button></td>
+        <td rowspan="3"><button type="button" onclick="res()">=</button></td>
+    </tr>
+    <tr>
+        <td><button type="button" onclick="add_num('1')">1</button></td>
+        <td><button type="button" onclick="add_num('2')">2</button></td>
+        <td><button type="button" onclick="add_num('3')">3</button></td>
+    </tr>
+    <tr>
+        <td colspan="3"><button type="button" onclick="add_num('0')">0</button></td>
+<!--        <td><button type="button">.</button></td>-->
+    </tr>
+</table>
+<script>
+    var output = '';
+    var number1 = '';
+    var number2 = '';
+    var what_op = 0;
+
+    function add_op(operator){
+        if(number2 === ''){
+            alert('숫자를 먼저 입력해주세요');
+        }
+        else if(what_op === 0){
+            output = output + operator;
+            number1 = number2;
+            number2 = '';
+            document.getElementById('show').value = output;
+            switch (operator){
+                case '+':
+                    what_op = 1;
+                    break;
+                case '-':
+                    what_op = 2;
+                    break;
+                case '*':
+                    what_op = 3;
+                    break;
+                case '/':
+                    what_op = 4;
+                    break;
+                }
+            }
+        else{
+            alert('연산자는 하나만 입력하실 수 있습니다.');
+        }
+    }
+    function add_num(number){
+        output = output + number;
+        number2 = number2 + number;
+        document.getElementById('show').value = output;
+
+    }
+    function res(){
+        var result
+        switch (what_op){
+            case 0:
+                alert('수식을 끝까지 입력해주세요.');
+                break;
+            case 1:
+                result = Number(number1) + Number(number2);
+                break;
+            case 2:
+                result = Number(number1) - Number(number2);
+                break;
+            case 3:
+                result = Number(number1) * Number(number2);
+                break;
+            case 4:
+                result = Number(number1) / Number(number2);
+                break;
+        }
+        document.getElementById('show').value = result;
+        output = '';
+        number1 = '';
+        number2 = '';
+        what_op = 0;
+    }
+    function del(){
+        output = '';
+        number1 = '';
+        number2 = '';
+        what_op = 0;
+        document.getElementById('show').value = output;
+    }
+
+</script>
+</body>
+</html>
